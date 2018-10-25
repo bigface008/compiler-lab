@@ -104,6 +104,7 @@ exp: lvalue {$$=A_VarExp(EM_tokPos,$1);}
     | exp MINUS exp {$$=A_OpExp(EM_tokPos,A_minusOp,$1,$3);}
     | exp TIMES exp {$$=A_OpExp(EM_tokPos,A_timesOp,$1,$3);}
     | exp DIVIDE exp {$$=A_OpExp(EM_tokPos,A_divideOp,$1,$3);}
+    | MINUS exp %prec UMINUS {$$=A_OpExp(EM_tokPos,A_minusOp,A_IntExp(EM_tokPos,0),$2);}
     | ID LBRACE RBRACE {$$=A_RecordExp(EM_tokPos,S_Symbol($1),NULL);}
     | ID LBRACE recorditems RBRACE {$$=A_RecordExp(EM_tokPos,S_Symbol($1),$3);}
     | lvalue ASSIGN exp {$$=A_AssignExp(EM_tokPos,$1,$3);}
@@ -140,7 +141,7 @@ tyfields: tyfield {$$=A_FieldList($1,NULL);}
     | {$$=NULL;}
 
 ty: ID {$$=A_NameTy(EM_tokPos,S_Symbol($1));}
-    | LPAREN tyfields RPAREN {$$=A_RecordTy(EM_tokPos,$2);}
+    | LBRACE tyfields RBRACE {$$=A_RecordTy(EM_tokPos,$2);}
     | ARRAY OF ID {$$=A_ArrayTy(EM_tokPos,S_Symbol($3));}
 
 tydec: TYPE ID EQ ty {$$=A_Namety(S_Symbol($2),$4);}
