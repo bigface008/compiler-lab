@@ -1,0 +1,1 @@
+./testcases/merge.tig:1.19: syntax error, unexpected LBRACE, expecting ID or LPAREN or ARRAY
