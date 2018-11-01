@@ -63,7 +63,7 @@ else
 			tfileName=${tcase##*/}
 			./$BIN $TESTCASEDIR/$tfileName >& _tmp.txt
 			ret_value=$?
-			cp _tmp.txt log.txt
+			# cp _tmp.txt log.txt
 			# fix bison version diff
 			if [ $tfileName = "test49.tig" ]; then
 				if [[ $ret_value = 0 ]]; then
@@ -110,6 +110,7 @@ else
 			fi
 
 			# normal case
+			cp _tmp.txt log2.txt
 			diff $DIFFOPTION _tmp.txt $REFOUTDIR/${tfileName%.*}.out >& .tmp.txt
 			if [ -s .tmp.txt ]; then
 				cat .tmp.txt
